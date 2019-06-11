@@ -11,7 +11,7 @@ export default Ember.Object.create({
   },
 
   postFor(id) {
-    return _.find(this.get('topicController.model.postStream.posts'), p => { return p.id == id })
+    return this.get('topicController.model.postStream.posts').find(p => p.id == id)
   },
 
   storeWidget(helper) {
@@ -28,8 +28,8 @@ export default Ember.Object.create({
 
   disabledFor(postId) {
     let post = this.postFor(postId)
-    let categoryName = post.get('topic.category.name') || ''
-    return _.contains(disabledCategories, categoryName.toLowerCase()) || post.get('topic.archived')
+    let categoryName = post ? (post.get('topic.category.name') || '') : ''
+    return disabledCategories.includes(categoryName.toLowerCase()) || post.get('topic.archived')
   },
 
   openPicker(post) {

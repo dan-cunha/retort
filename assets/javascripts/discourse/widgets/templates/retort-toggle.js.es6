@@ -21,8 +21,22 @@ export default Ember.Object.create({
   },
 
   sentence() {
-    let usernames = this.state.usernames
-    return usernames.join(', ')
+    let usernames = this.state.usernames.join(', ')
+    
+    return I18n.t(this.sentenceKey(), {
+      first:  usernames,
+      second: usernames,
+      count:  this.state.usernames.length - 2,
+      emoji:  this.state.emoji
+    })
+  },
+
+  sentenceKey() {
+    switch(this.state.usernames.length) {
+      case 1:  return 'retort.reactions.one_person'
+      case 2:  return 'retort.reactions.two_people'
+      default: return 'retort.reactions.many_people'
+    }
   }
 
 })
